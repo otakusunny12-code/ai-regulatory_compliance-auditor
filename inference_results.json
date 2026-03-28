@@ -1,0 +1,57 @@
+{
+  "model": "Qwen/Qwen2.5-7B-Instruct ",
+  "tasks": [
+    {
+      "task_id": "easy",
+      "steps": 1,
+      "final_score": 0.0,
+      "findings_count": 0,
+      "breakdown": {
+        "correct_findings": 0,
+        "false_positives": 0,
+        "missed_violations": 2,
+        "correct_severity_count": 0,
+        "base_score": 0.0,
+        "severity_bonus": 0.0,
+        "false_positive_penalty": -0.0,
+        "repetition_penalty": 0.0,
+        "total_raw_score": 0.0
+      }
+    },
+    {
+      "task_id": "medium",
+      "steps": 1,
+      "final_score": 0.0,
+      "findings_count": 0,
+      "breakdown": {
+        "correct_findings": 0,
+        "false_positives": 0,
+        "missed_violations": 4,
+        "correct_severity_count": 0,
+        "base_score": 0.0,
+        "severity_bonus": 0.0,
+        "false_positive_penalty": -0.0,
+        "repetition_penalty": 0.0,
+        "total_raw_score": 0.0
+      }
+    },
+    {
+      "task_id": "hard",
+      "steps": 1,
+      "final_score": 0.0,
+      "findings_count": 0,
+      "breakdown": {
+        "correct_findings": 0,
+        "false_positives": 0,
+        "missed_violations": 10,
+        "correct_severity_count": 0,
+        "base_score": 0.0,
+        "severity_bonus": 0.0,
+        "false_positive_penalty": -0.0,
+        "repetition_penalty": 0.0,
+        "total_raw_score": 0.0
+      }
+    }
+  ],
+  "average_score": 0.0
+}
