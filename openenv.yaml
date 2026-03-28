@@ -1,0 +1,199 @@
+# OpenEnv Specification for AI Regulatory Compliance Auditor
+# Version: 1.0.0
+
+name: ai_regulatory_compliance_auditor
+version: 1.0.0
+description: |
+  A production-ready OpenEnv environment simulating corporate data privacy 
+  and regulatory compliance auditing workflows. Agents act as compliance 
+  auditors reviewing policy documents to identify regulatory violations.
+
+author: AI Compliance Auditor Team
+license: MIT
+
+# Environment metadata
+metadata:
+  domain: Corporate Data Privacy & Governance
+  difficulty_levels:
+    - easy
+    - medium
+    - hard
+  max_runtime_minutes: 20
+  resource_requirements:
+    cpu_cores: 2
+    memory_gb: 8
+
+# Observation space definition
+observation_space:
+  type: object
+  properties:
+    document_text:
+      type: string
+      description: The regulatory document text to audit
+    step_count:
+      type: integer
+      description: Current step number in the episode
+    max_steps:
+      type: integer
+      description: Maximum steps allowed for this episode
+    task_id:
+      type: string
+      enum: [easy, medium, hard]
+      description: Identifier for the current task
+    task_description:
+      type: string
+      description: Description of what the agent needs to accomplish
+    previous_findings:
+      type: array
+      description: Findings submitted in previous steps
+      items:
+        $ref: "#/definitions/ComplianceFinding"
+    previous_rewards:
+      type: array
+      description: Rewards received in previous steps
+      items:
+        type: number
+    is_final:
+      type: boolean
+      description: Whether this is the final step of the episode
+
+# Action space definition
+action_space:
+  type: object
+  properties:
+    findings:
+      type: array
+      description: List of compliance findings identified by the auditor
+      items:
+        $ref: "#/definitions/ComplianceFinding"
+    is_submission:
+      type: boolean
+      description: Whether this action represents a final submission
+    reasoning:
+      type: string
+      description: Optional reasoning behind the findings
+  required:
+    - findings
+    - is_submission
+
+# Type definitions
+definitions:
+  ComplianceFinding:
+    type: object
+    properties:
+      violation_type:
+        type: string
+        enum:
+          - missing_mandatory_clause
+          - data_retention_violation
+          - consent_requirement_violation
+          - cross_border_transfer_violation
+          - data_subject_rights_violation
+          - purpose_limitation_violation
+          - data_minimization_violation
+          - security_measures_violation
+          - breach_notification_violation
+          - third_party_sharing_violation
+          - children_data_violation
+          - automated_decision_violation
+          - document_contradiction
+          - regulatory_mismatch
+        description: Type of violation identified
+      severity:
+        type: string
+        enum: [critical, high, medium, low]
+        description: Severity level of the violation
+      location:
+        type: string
+        description: Location in document where violation was found
+      description:
+        type: string
+        description: Clear description of the violation
+      evidence:
+        type: string
+        description: Direct quote or evidence from the document
+      regulatory_reference:
+        type: string
+        description: Reference to specific regulation (e.g., GDPR Article 13)
+    required:
+      - violation_type
+      - severity
+      - location
+      - description
+      - evidence
+
+# Reward space definition
+reward_space:
+  type: object
+  properties:
+    score:
+      type: number
+      minimum: 0.0
+      maximum: 1.0
+      description: Normalized reward score between 0.0 and 1.0
+    raw_score:
+      type: number
+      description: Raw score before normalization
+    breakdown:
+      type: object
+      properties:
+        correct_findings:
+          type: integer
+        false_positives:
+          type: integer
+        missed_violations:
+          type: integer
+        correct_severity_count:
+          type: integer
+        base_score:
+          type: number
+        severity_bonus:
+          type: number
+        false_positive_penalty:
+          type: number
+        repetition_penalty:
+          type: number
+    feedback:
+      type: string
+      description: Human-readable feedback on the submission
+
+# Tasks definition
+tasks:
+  easy:
+    description: Detect missing mandatory GDPR clauses in a privacy policy
+    max_steps: 5
+    ground_truth_count: 2
+    
+  medium:
+    description: Detect contradictions between consent requirement sections
+    max_steps: 8
+    ground_truth_count: 4
+    
+  hard:
+    description: Multi-document cross-reference audit with interdependent failures
+    max_steps: 15
+    ground_truth_count: 10
+
+# Scoring configuration
+scoring:
+  correct_finding_weight: 1.0
+  severity_bonus_weight: 0.25
+  false_positive_penalty: -0.5
+  repetition_penalty: -0.1
+  match_threshold: 0.6
+
+# Entry point
+entry_point: compliance_env.env:ComplianceAuditorEnvironment
+
+# Dependencies
+dependencies:
+  python: ">=3.9"
+  packages:
+    - pydantic>=2.0.0
+    - openai>=1.0.0
+
+# Docker configuration
+docker:
+  base_image: python:3.11-slim
+  working_dir: /app
+  cmd: ["python", "inference.py"]
