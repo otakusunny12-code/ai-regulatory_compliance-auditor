@@ -196,4 +196,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-    sys.exit(0)
+    import time
+    while True:
+        time.sleep(3600)
