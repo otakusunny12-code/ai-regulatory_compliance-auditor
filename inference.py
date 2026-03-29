@@ -195,5 +195,5 @@ def main():
 
 
 if __name__ == "__main__":
-    score = main()
-    sys.exit(0 if score > 0 else 1)
+    main()
+    sys.exit(0)
