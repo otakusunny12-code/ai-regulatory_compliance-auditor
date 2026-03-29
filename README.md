@@ -1,5 +1,11 @@
-# AI Regulatory Compliance Auditor
-
+---
+title: AI Regulatory Compliance Auditor
+emoji: 🤖
+colorFrom: blue
+colorTo: purple
+sdk: docker
+pinned: false
+---
 A production-ready **OpenEnv** environment that simulates corporate data privacy and regulatory compliance auditing workflows. Agents act as compliance auditors reviewing policy documents to identify regulatory violations.
 
 ![OpenEnv Compatible](https://img.shields.io/badge/OpenEnv-Compatible-brightgreen)
@@ -203,11 +209,9 @@ Findings are matched to ground truth using a similarity threshold of 0.6, consid
 ```bash
 # Clone or navigate to the project directory
 cd ai_regulatory_compliance_auditor
-
 # Create virtual environment (recommended)
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
-
 # Install dependencies
 pip install -r requirements.txt
 ```
@@ -231,16 +235,12 @@ export MAX_TOKENS="4000"                         # Optional, default shown
 ```python
 from src.environment import ComplianceAuditorEnvironment
 from src.models import Action, ComplianceFinding, ViolationType, SeverityLevel
-
 # Create environment
 env = ComplianceAuditorEnvironment()
-
 # Reset for a specific task
 observation = env.reset("easy")
-
 print(f"Task: {observation.task_description}")
 print(f"Document length: {len(observation.document_text)} characters")
-
 # Create a finding
 finding = ComplianceFinding(
     violation_type=ViolationType.MISSING_MANDATORY_CLAUSE,
@@ -250,20 +250,16 @@ finding = ComplianceFinding(
     evidence="Section 9 lists rights but omits complaint right",
     regulatory_reference="GDPR Article 77"
 )
-
 # Submit action
 action = Action(
     findings=[finding],
     is_submission=True
 )
-
 # Step environment
 observation, reward, done, info = env.step(action)
-
 print(f"Reward: {reward}")
 print(f"Done: {done}")
 print(f"Info: {info}")
-
 # Get full state
 state = env.state()
 ```
@@ -273,7 +269,6 @@ state = env.state()
 ```bash
 # Set your API key
 export OPENAI_API_KEY="sk-..."
-
 # Run all tasks
 python inference.py
 ```
@@ -489,9 +484,7 @@ AVERAGE SCORE: 0.7625
 
 Results saved to: inference_results.json
 ```
-
 ## Project Structure
-
 ```
 ai_regulatory_compliance_auditor/
 ├── openenv.yaml           # OpenEnv specification
@@ -507,7 +500,6 @@ ai_regulatory_compliance_auditor/
     ├── graders.py        # Deterministic grading logic
     └── environment.py    # Main OpenEnv environment class
 ```
-
 ## Key Components
 
 ### `src/models.py`
