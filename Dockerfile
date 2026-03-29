@@ -11,4 +11,4 @@ COPY . .
 
 ENV PYTHONUNBUFFERED=1
 
-CMD ["python", "inference.py"]
+CMD ["sh", "-c", "python inference.py && tail -f /dev/null"]
